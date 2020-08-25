@@ -9,12 +9,19 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    @IBOutlet weak var newnameLabel: UILabel!
+    
+    @IBOutlet weak var dummyLabel: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("App has launched")
         // Do any additional setup after loading the view.
     }
 
-
+    @IBAction func messageButtonPressed(_ sender: UIButton) {
+        print("You just pressed me")
+        newnameLabel.textColor = dummyLabel.textColor
+    }
+    
 }
 
