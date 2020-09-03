@@ -10,17 +10,21 @@ import UIKit
 
 class ViewController: UIViewController {
     @IBOutlet weak var newnameLabel: UILabel!
+    @IBOutlet weak var feelingImage: UIImageView!
     
-    @IBOutlet weak var dummyLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("App has launched")
+        newnameLabel.text = ""
         // Do any additional setup after loading the view.
     }
 
     @IBAction func messageButtonPressed(_ sender: UIButton) {
-        print("You just pressed me")
-        newnameLabel.textColor = dummyLabel.textColor
+        print("You just pressed a button")
+        newnameLabel.text = "Good Job!"
+        feelingImage.image = UIImage(named: "image\(arc4random_uniform(9)).png")
+
+        
     }
     
 }
