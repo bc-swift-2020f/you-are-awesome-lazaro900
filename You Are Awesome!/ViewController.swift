@@ -40,40 +40,16 @@ class ViewController: UIViewController {
                         "I Wanted To Let You Know How Amazing You Are"]
         
         //pick a random message
-        newnameLabel.text = messages[Int.random(in: 0...messages.count-1)]
         
-//        //this will control the image number and reset it when it reaches 10
-//        print(imageNumber)
-//        imageNumber = imageNumber + 1
-//        if imageNumber == 10 {
-//            imageNumber = 0
-//        }
-//        let imageName = "image\(imageNumber).png"
-//        feelingImage.image = UIImage (named: imageName)
-//
-//
-//        //these are the messages that will be displayed
-//        let messages = ["You are Awesome!",
-//                        "Good Job!",
-//                        "Amazing",
-//                        "You are Talented"]
-//
-//
-//        //path for what message to display
-//        if newnameLabel.text == messages[messagenum] {
-//            newnameLabel.text = messages[messagenum]
-//        } else if newnameLabel.text == messages[messagenum] {
-//            newnameLabel.text = messages[messagenum]
-//        }
-//        else {
-//            newnameLabel.text = messages[messagenum]
-//        }
-//
-//        //used to control what message is shown
-//        messagenum += 1
-//        if messagenum == 4{
-//            messagenum = 0
-//        }
+        var newMessage = messages[Int.random(in: 0...messages.count-1)]
+        
+        while newMessage == newnameLabel.text {
+            print("A message repeated but I took care of it :)")
+            newMessage = messages[Int.random(in: 0...messages.count-1)]
+        }
+        
+        newnameLabel.text = newMessage
+        
 
         
     }
