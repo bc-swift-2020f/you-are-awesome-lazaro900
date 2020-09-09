@@ -7,14 +7,20 @@
 //
 
 import UIKit
+import AVFoundation
 
 class ViewController: UIViewController {
     @IBOutlet weak var newnameLabel: UILabel!
     @IBOutlet weak var feelingImage: UIImageView!
+    var audioPlayer : AVAudioPlayer!
+    
     
     // variables to control what message and image is shown
-    var imageNumber = 0
-    var messagenum = 0
+    var imageNumber = 100000
+    var totalNumberOfImages = 9
+    var messageNumber = -1
+    let totalNumberOfSounds = 3
+    var soundNumber = -1
     
     
     override func viewDidLoad() {
@@ -22,36 +28,62 @@ class ViewController: UIViewController {
         newnameLabel.text = "Welcome!"
         // Do any additional setup after loading the view.
     }
+    
+    //this function will be used to play a sound
+    func playSound(new : String) {
+        if let sound = NSDataAsset(name: new) {
+            do {
+                try audioPlayer = AVAudioPlayer(data: sound.data)
+                audioPlayer.play()
+            } catch {
+                print("ERROR: \(error.localizedDescription) Could not read data file sound0")
+            }
+            
+        } else {
+            print("Could not read data file sound0")
+        }
+    }
+    
+    
+    //this function will be used to pick a non-repeating image, message, and sound
+    func nonRepeatingRandom(originalNumber : Int, upperBounds : Int) -> Int {
+      var newNumber : Int
+      
+      repeat {
+        newNumber = Int.random(in: 0...upperBounds)
+
+
+      } while newNumber == originalNumber
+        
+        return newNumber
+    }
+    
+    
 
     @IBAction func messageButtonPressed(_ sender: UIButton) {
         
-        //pick a random image
-        let imageName = "image\(Int.random(in: 0...9)).png"
-        feelingImage.image = UIImage (named: imageName)
+        //pick a random image and check that it is not a repeat
+        
+        imageNumber = nonRepeatingRandom(originalNumber: imageNumber, upperBounds: totalNumberOfImages)
+        feelingImage.image = UIImage (named: "image\(imageNumber).png")
 
         
         //these are the messages that will be displayed
         let messages = ["You are Awesome!",
                         "Good Job!",
                         "Amazing",
-                        "You are So Talented",
-                        "I Wish That I Was You",
-                        "You Have Mad Skillzzzzzz",
-                        "I Wanted To Let You Know How Amazing You Are"]
+                        "You are so talented",
+                        "I wish that I was you",
+                        "You have mad skillzzzzzz",
+                        "I wanted to let you know how amazing you are"]
         
-        //pick a random message
+        //pick a random message and check that it is not a repeat
+        messageNumber = nonRepeatingRandom(originalNumber: messageNumber, upperBounds: messages.count - 1)
+        newnameLabel.text = messages[messageNumber]
         
-        var newMessage = messages[Int.random(in: 0...messages.count-1)]
-        
-        while newMessage == newnameLabel.text {
-            print("A message repeated but I took care of it :)")
-            newMessage = messages[Int.random(in: 0...messages.count-1)]
-        }
-        
-        newnameLabel.text = newMessage
-        
-
-        
+        //pick a rnadom sound and check that it is not a repeat
+        soundNumber = nonRepeatingRandom(originalNumber: soundNumber, upperBounds: totalNumberOfSounds)
+        playSound(new: "sound\(soundNumber)")
     }
     
 }
