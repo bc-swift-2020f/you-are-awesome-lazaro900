@@ -12,6 +12,8 @@ import AVFoundation
 class ViewController: UIViewController {
     @IBOutlet weak var newnameLabel: UILabel!
     @IBOutlet weak var feelingImage: UIImageView!
+    @IBOutlet weak var playSoundSwitch: UISwitch!
+    
     var audioPlayer : AVAudioPlayer!
     
     
@@ -21,6 +23,7 @@ class ViewController: UIViewController {
     var messageNumber = -1
     let totalNumberOfSounds = 3
     var soundNumber = -1
+    var play = true
     
     
     override func viewDidLoad() {
@@ -44,6 +47,13 @@ class ViewController: UIViewController {
         }
     }
     
+    @IBAction func playSoundToggled(_ sender: UISwitch) {
+        if !sender.isOn {
+            play = false
+        } else {
+            play = true
+        }
+    }
     
     //this function will be used to pick a non-repeating image, message, and sound
     func nonRepeatingRandom(originalNumber : Int, upperBounds : Int) -> Int {
@@ -81,9 +91,11 @@ class ViewController: UIViewController {
         messageNumber = nonRepeatingRandom(originalNumber: messageNumber, upperBounds: messages.count - 1)
         newnameLabel.text = messages[messageNumber]
         
-        //pick a rnadom sound and check that it is not a repeat
-        soundNumber = nonRepeatingRandom(originalNumber: soundNumber, upperBounds: totalNumberOfSounds)
-        playSound(new: "sound\(soundNumber)")
+        //pick a random sound and check that it is not a repeat
+        if play {
+            soundNumber = nonRepeatingRandom(originalNumber: soundNumber, upperBounds: totalNumberOfSounds)
+            playSound(new: "sound\(soundNumber)")
+        }
     }
     
 }
